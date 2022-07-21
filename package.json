@@ -1,6 +1,4 @@
 {
-  "name": "rsapp",
-  "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -10,12 +8,25 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "~45.0.0",
-    "expo-status-bar": "~1.3.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-native": "0.68.2",
-    "react-native-web": "0.17.7"
+    "expo": "~44.0.0",
+    "expo-status-bar": "~1.2.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-web": "0.17.1",
+    "osrs-api": "*",
+    "expo-constants": "~13.0.2",
+    "react-native-svg": "12.1.1",
+    "@expo/vector-icons": "^12.0.0",
+    "react-native-modal": "*",
+    "react-native-paper": "4.9.2",
+    "react-native-screens": "~3.10.1",
+    "react-native-progress": "*",
+    "@react-navigation/native": "*",
+    "@react-navigation/native-stack": "*",
+    "react-native-safe-area-context": "3.3.2",
+    "@react-navigation/bottom-tabs": "*",
+    "react-native-vector-icons": "9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

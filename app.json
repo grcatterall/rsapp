@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "RsApp",
-    "slug": "RsApp",
+    "name": "runescape-app-v2",
+    "slug": "snack-9e9dbe0f-a158-4a8f-8f95-87529854a2d8",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
