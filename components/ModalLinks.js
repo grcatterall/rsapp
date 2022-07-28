@@ -17,6 +17,7 @@ export default Links;
 
 function checkLinkExists(stat)
 {
+  
   let link = Constants.Skills.links.find(item => item.id == stat).f2pUrl;
   if(link){
     return  <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://oldschoolrunescape.fandom.com/wiki/' + Constants.Skills.links.find(item => item.id == stat).f2pUrl)}}>

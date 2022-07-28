@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -7,100 +7,109 @@ import {
   ScrollView,
   TouchableHighlight,
   TouchableOpacity,
-  Button
+  Button,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SwipeableModal from './Modal';
 import cardStyles from '../assets/CardStyles';
+import FormatUserData from '../services/FormatUserData';
 
 const Dashboard = ({ route, navigation }) => {
-  const { data } = route.params;
-
-  console.log(data);
+  const [username, setUsername] = useState('');
+  const [userData, setUserData] = useState({});
   
-    const other = {
-      'Clue Scrolls Total': data.bountyHunter,
-      'Easy Clue Scroll': data.hardClueScrolls,
-      'Medium Clue Scroll': data.lastManStanding,
-      'Hard Clue Scroll': data.eliteClueScrolls,
-      'Elite Clue Scroll': data.clueScrolls,
-      'Master Clue Scroll': data.masterClueScrolls,
-      'Lastman Standing': data.easyClueScrolls,
-      'Bounty Hunter': data.easyClueScrolls,
-      'Bounty Hunter Rogues': data.mediumClueScrolls,
-    };
-    const overallData = data.overall;
-    //If object isn't a skill, remove it from the list
-    Object.keys(data).map(function(key){
-      !(data[key].level) &&
-        delete data[key];
-    })
-    Object.keys(data).map(function(key){
-      if(data[key].experience){  
-        if(data[key].experience == -1){
-          data[key].experience = 0;
-        }
+  const { data, name } = route.params;
+  const skills = data.skills;
+  const other = data.other;
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userData');
+      if (value !== null) {
+        setUserData(JSON.parse(value));
+        setUsername(await AsyncStorage.getItem('username'));
       }
-    })
-    Object.keys(other).map(function(key){
-      (other[key].rank == -1) &&
-        delete other[key];
-    })
-    Object.keys(data).map(function(key){
-      if(data[key].rank == -1)
-        data[key].rank = 'N/A';
-    })
-    delete data['overall'];
-    return (
-      <ScrollView style={styles.container}>
-        <View style={styles.row}>
-          <Text style={styles.header}>Skills</Text>     
-        </View>
-          {Object.keys(data).map(function(key){
-            data[key].name = key;
-            return(
-              <SwipeableModal data={data[key]} />
-          );})}
-        <View style={styles.row}>
-               <Text style={styles.header}>Minigames</Text>     
-        </View>
-          {Object.keys(other).map(function(key){
-            return(
-              <View style={styles.card}>
-                <View style={styles.row}>
-                  <Text style={styles.defaultText} key={key}>{key}: </Text>
-                  <Text style={styles.defaultLevel}>{other[key].score}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.defaultTextSmall}>Rank: </Text>
-                  <Text style={styles.defaultTextSmall}>{other[key].rank}</Text>
-                </View>
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  const compareAccounts = () => {
+    navigation.navigate('Compare', {
+      'searchData': {
+        'name': name, 
+        'skills': skills,
+        'other': other
+      },
+      'userdata': {...FormatUserData(userData), 'name': username}
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  let button = <Text></Text>;
+
+  if (username !== '') {
+    button = <Button title="Compare with your account" onPress={() => { compareAccounts() }} />
+  }
+
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.row}>
+        <Text style={styles.header}>Skills</Text>
+        {button}
+      </View>
+      {Object.keys(skills).map(function (key) {
+        skills[key].name = key;
+        return <SwipeableModal data={skills[key]} />;
+      })}
+      <View style={styles.row}>
+        <Text style={styles.header}>Minigames</Text>
+      </View>
+      {Object.keys(other).map(function (key) {
+        if (typeof other[key] !== 'undefined') {
+          return (
+            <View style={styles.card}>
+              <View style={styles.row}>
+                <Text style={styles.defaultText} key={key}>
+                  {key}:{' '}
+                </Text>
+                <Text style={styles.defaultLevel}>{other[key].score}</Text>
               </View>
-          );})}
-      </ScrollView>
-       
-    );
-}
+              <View style={styles.row}>
+                <Text style={styles.defaultTextSmall}>Rank: </Text>
+                <Text style={styles.defaultTextSmall}>{other[key].rank}</Text>
+              </View>
+            </View>
+          );
+        }
+      })}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#DBCBA3',
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
   },
-  row:{
-    flex:1, 
-    alignSelf: 'stretch', 
+  row: {
+    flex: 1,
+    alignSelf: 'stretch',
     flexDirection: 'row',
     marginTop: 4,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
-  card:{
+  card: {
     backgroundColor: 'white',
     borderRadius: 12,
-    flex:1, 
-    alignSelf: 'stretch', 
+    flex: 1,
+    alignSelf: 'stretch',
     flexDirection: 'column',
     margin: 4,
     padding: 8,
@@ -110,27 +119,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4.5,
     elevation: 1,
-    marginTop: 10
+    marginTop: 10,
   },
-  header:{
-    fontSize: 40,  
+  header: {
+    fontSize: 40,
     margin: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
-  defaultText:{
+  defaultText: {
     color: 'black',
     fontSize: 28,
     alignSelf: 'stretch',
     flex: 1,
     fontWeight: 'bold',
   },
-  defaultLevel:{
+  defaultLevel: {
     color: 'black',
     fontSize: 28,
     alignSelf: 'stretch',
     fontWeight: 'bold',
   },
-  defaultTextSmall:{
+  defaultTextSmall: {
     color: 'black',
     fontSize: 20,
     alignSelf: 'stretch',

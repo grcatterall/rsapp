@@ -2,7 +2,8 @@ import React, { useState, useEffect, Component } from 'react';
 
 import FetchUser from '../services/FetchUser';
 import Dashboard from './Dashboard';
-import SearchBar from './SearchBar';
+import SearchBar from './Account/SearchBar';
+import FormatUserData from '../services/FormatUserData';
 
 const SearchScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -16,12 +17,11 @@ const SearchScreen = ({ navigation }) => {
 
   const handleSubmit = () => {
     FetchUser(username).then((res) => {
-      // console.log(res);
       if (res) {
-        console.log('Here')
         navigation.navigate('Dashboard', {
-          data: res
-        });
+          data: FormatUserData(res),
+          'name': username,
+        }).setOptions({ title: username });
       }
     });
   }

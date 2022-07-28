@@ -6,10 +6,10 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-  AsyncStorage,
+  AsyncStorage
 } from 'react-native';
 
-const SearchBar = ({ handleSubmit, setUsername }) => {
+const SearchBar = ({ handleSubmit, setUsername, username }) => {
   return (
     <View style={styles.main}>
       <View>
@@ -17,6 +17,7 @@ const SearchBar = ({ handleSubmit, setUsername }) => {
           style={styles.searchInput}
           onChange={(e) => setUsername(e.nativeEvent.text)}
           placeholder="Enter Username..."
+          defaultValue={typeof username !== 'undefined' ? username : ''}
         />
         <View style={styles.buttonContainer}>
           <TouchableHighlight style={styles.button} underlayColor="white">
@@ -36,12 +37,11 @@ const SearchBar = ({ handleSubmit, setUsername }) => {
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1,
+    // flex: 1,
     padding: 30,
-    marginTop: 10,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#e5e6ea',
+    // backgroundColor: '#e5e6ea',
   },
   searchInput: {
     height: 40,

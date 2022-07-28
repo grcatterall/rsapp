@@ -22,6 +22,7 @@ class SwipeableModal extends Component {
 
   render() {
   const data = this.props.data;
+
     return (
       <Fragment style={styles.mainContainer}>
         <Modal
@@ -32,7 +33,7 @@ class SwipeableModal extends Component {
           onBackdropPress={this.closeModal}
         >
           <View style={styles.modalContainer}>
-            <View style={[styles.modalHeader, cardStyles[data.name]]}>
+            <View style={[styles.modalHeader, cardStyles[data.skillKey]]}>
               <View style={{justifyContent: 'flex-end', flex: 1, flexDirection: 'row' }}>
                 <TouchableOpacity
                   onPress={this.closeModal}
@@ -41,11 +42,11 @@ class SwipeableModal extends Component {
                 </TouchableOpacity>
               </View>
               <View style={[styles.row, styles.flexEnd]}>
-                <Icon stat={data.name}/>
+                <Icon stat={data.skillKey}/>
               </View>
               <View style={styles.modalHeaderContent}>
                 <Text style={styles.header}>
-                  {data.name.toUpperCase()}
+                  {data.skillKey.toUpperCase()}
                 </Text>
                 <Bar xp={data.experience} level={data.level}/>
               </View>
@@ -84,12 +85,12 @@ class SwipeableModal extends Component {
                 </Text>
               </View>
             </View>
-            <Links stat={data.name}/>            
+            <Links stat={data.skillKey}/>            
           </View>
         </Modal>
 
         <Button
-          label={data.name}
+          label={data.skillKey}
           onPress={this.openModal}
           level={data.level}
 

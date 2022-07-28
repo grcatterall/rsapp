@@ -6,10 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchScreen from './SearchScreen';
 import DetailsScreen from './DetailsScreen';
 import Dashboard from './Dashboard';
+import Compare from './Lookup/Compare';
 
 function HomeScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#DBCBA3', }}>
       <Text>Home Screen</Text>
       <Button
         title="Go to Search"
@@ -23,11 +24,15 @@ const Stack = createNativeStackNavigator();
 
 function Lookup() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      cardStyle: {
+        backgroundColor: '#DBCBA3'
+      }
+    }}>
       <Stack.Screen name="Lookup" component={HomeScreen} options={{headerShown: false}}/>
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="Dashboard" component={Dashboard} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Screen name="Compare" component={Compare} />
     </Stack.Navigator>
   );
 }

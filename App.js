@@ -35,7 +35,7 @@ const App = () => {
           component={Lookup}
           options={{ headerShown: false }}
         />
-        <Tab.Screen name="My Account" component={MyAccount}  />
+        <Tab.Screen name="My Account" component={MyAccount} options={{ headerShown: false }}/>
       </Tab.Navigator>
     </NavigationContainer>
   );

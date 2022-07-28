@@ -5,7 +5,7 @@ import * as Constants from '../lib/constants';
 
 const Icon = ({stat}) => ( 
   <View style={styles.iconContainer}>
-    <Image source={{uri: 'https://vignette.wikia.nocookie.net/2007scape/images/' + Constants.Skills.links.find(item => item.id == stat).imgPath}}
+    <Image source={{uri: 'https://vignette.wikia.nocookie.net/2007scape/images/' + Constants.Skills.links.find(item => item.id == stat.charAt(0).toLowerCase() + stat.slice(1)).imgPath}}
     style={styles.icon}
     />
   </View>
